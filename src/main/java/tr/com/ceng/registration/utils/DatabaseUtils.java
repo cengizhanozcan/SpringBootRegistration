@@ -1,4 +1,4 @@
-package tr.com.ceng.utils;
+package tr.com.ceng.registration.utils;
 
 /**
  *

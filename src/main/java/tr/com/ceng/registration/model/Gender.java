@@ -1,4 +1,4 @@
-package tr.com.ceng.model;
+package tr.com.ceng.registration.model;
 
 /**
  *

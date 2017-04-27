@@ -1,4 +1,4 @@
-package tr.com.ceng.model;
+package tr.com.ceng.registration.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -6,7 +6,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
-import tr.com.ceng.utils.DatabaseUtils;
+import tr.com.ceng.registration.utils.DatabaseUtils;
 
 /**
 *
@@ -27,6 +27,9 @@ public class User extends BaseEntity{
 	@Column(name = "username", nullable = false, length = 100)
 	private String username;
 	
+	@Column(name = "password", nullable = false, length=255)
+	private String password;
+	
 	@Column(name = "email", nullable = false, length = 200)
 	private String email;
 	
@@ -36,6 +39,18 @@ public class User extends BaseEntity{
 	@Column(name = "gender", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private Gender gender;
+
+	@Column(name = "role", nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Role role;
+	
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
 	public String getName() {
 		return name;
@@ -83,6 +98,14 @@ public class User extends BaseEntity{
 
 	public void setGender(Gender gender) {
 		this.gender = gender;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	
