@@ -6,7 +6,7 @@ package tr.com.ceng.registration.model;
  */
 public enum Gender {
 
-	M("Erkek"), F("Kadin");
+	M("user.male"), F("user.female");
 	
 	private String lbl;
 	

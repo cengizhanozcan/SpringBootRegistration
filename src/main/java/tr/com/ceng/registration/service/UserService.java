@@ -1,5 +1,7 @@
 package tr.com.ceng.registration.service;
 
+import java.util.List;
+
 import tr.com.ceng.registration.model.User;
 
 /**
@@ -9,5 +11,11 @@ import tr.com.ceng.registration.model.User;
 public interface UserService {
 
 	User findByUsername(String username);
+
+	User save(User user);
+
+	User findById(Long id);
+
+	List<User> search();
 
 }

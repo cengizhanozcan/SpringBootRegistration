@@ -44,17 +44,22 @@ public class BaseEntityRepositoryImpl<T extends BaseEntity> implements BaseEntit
 
 	@Override
 	public T update(T entity) {
-		return null;
+		Session session = sessionFactory.getCurrentSession();
+		session.update(entity);
+		
+		return entity;
 	}
 
 	@Override
 	public void delete(T entity) {
-
+		Session session = sessionFactory.getCurrentSession();
+		session.delete(entity);
 	}
 
 	@Override
 	public T findById(Long id) {
-		return null;
+		Session session = sessionFactory.getCurrentSession();
+		return (T) session.get(type, id);
 	}
 
 }

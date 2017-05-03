@@ -1,4 +1,4 @@
-package tr.com.ceng;
+package tr.com.ceng.registration;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,5 +1,7 @@
 package tr.com.ceng.registration.repository;
 
+import java.util.List;
+
 import tr.com.ceng.registration.model.User;
 
 /**
@@ -9,5 +11,7 @@ import tr.com.ceng.registration.model.User;
 public interface UserRepository extends BaseEntityRepository<User>{
 
 	User findByUsername(String username);
+
+	List<User> search();
 
 }

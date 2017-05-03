@@ -21,7 +21,7 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl<User> implement
 	@Override
 	public User findByUsername(String username) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM registration.user_user WHERE username=:username ");
+		Query query = session.createQuery("FROM User WHERE username=:username ");
 		query.setParameter("username", username);
 		
 		List<User> users = query.list();
@@ -32,5 +32,11 @@ public class UserRepositoryImpl extends BaseEntityRepositoryImpl<User> implement
 		return null;
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<User> search() {
+		Session session = sessionFactory.getCurrentSession();
+		return session.createQuery("FROM User").list();
+	}
 	
 }
