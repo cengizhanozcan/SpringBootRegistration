@@ -1,6 +1,5 @@
-<%@ tag language="java" pageEncoding="UTF-8"%>
-<%@attribute name="header" fragment="true"%>
-<%@attribute name="footer" fragment="true"%>
+<%@ attribute name="header" fragment="true"%>
+<%@ attribute name="footer" fragment="true"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -38,16 +37,38 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/home">Uyelik Sistemi</a>
 		</div>
-		<!-- /.navbar-header --> <!-- /.navbar-top-links -->
-
+		
+		<form name="submitLogout" action="${request.contextPath}/logout" method="POST">
+		<ul class="nav navbar-top-links navbar-right">
+             <li class="dropdown">
+                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                     <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                 </a>
+                 <ul class="dropdown-menu dropdown-user">
+                     <li><a href="javascript:document.submitLogout.submit()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                     </li>
+                 </ul>
+             </li>
+         </ul>
+         </form>
 		<div class="navbar-default sidebar" role="navigation">
 			<div class="sidebar-nav navbar-collapse">
 				<ul class="nav" id="side-menu">
-					<li><a href="index.html"><i class="fa fa-dashboard fa-fw"></i>
-							Dashboard</a></li>
-
+					<li>
+						<a href="${pageContext.request.contextPath}/home"><i class="fa fa-dashboard fa-fw"></i>
+							Anasayfa</a>
+					</li>
+					<li>
+						<a href="${pageContext.request.contextPath}/user/"><i class="fa fa-users fa-fw"></i>
+							Kullanici Listesi</a>
+					</li>
+					<li>
+						<a href="${pageContext.request.contextPath}/user/create"><i class="fa fa-user-plus fa-fw"></i>
+							Kullanici Ekle</a>
+					</li>
 				</ul>
 			</div>
 			<!-- /.sidebar-collapse -->

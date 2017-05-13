@@ -1,14 +1,20 @@
 package tr.com.ceng.registration.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import tr.com.ceng.registration.model.Mail;
 import tr.com.ceng.registration.model.User;
 import tr.com.ceng.registration.repository.UserRepository;
 import tr.com.ceng.registration.service.UserService;
+import tr.com.ceng.registration.utils.LocaleUtils;
 
 /**
  *
@@ -21,6 +27,16 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
+	@Autowired
+	@Qualifier(value = "mailSenderService")
+	private MailSenderService mailSenderService;
+	
+	@Autowired
+	private MessageSource messageSource;
+	
 	@Override
 	public User findByUsername(String username) {
 		return userRepository.findByUsername(username);
@@ -29,13 +45,29 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User save(User user) {
 		validateBeforeSave(user);
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		
 		if(user.getId() == null){
 			userRepository.create(user);
+			sendUserNotificationMail(user);
 		} else {
 			userRepository.update(user);
 		}
 		
 		return user;
+	}
+
+	private void sendUserNotificationMail(User user) {
+		Mail mail = new Mail();
+		mail.setSubject(messageSource.getMessage("mail.userRegistration.subject", 
+				new Object[]{}, LocaleUtils.LOCALE_TR));
+		mail.setBody(messageSource.getMessage("mail.userRegistration.body", 
+				new Object[]{}, LocaleUtils.LOCALE_TR));
+		List<String> tos = new ArrayList<String>();
+		tos.add(user.getEmail());
+		mail.setTos(tos);
+
+		mailSenderService.send(mail);
 	}
 
 	private void validateBeforeSave(User user) {

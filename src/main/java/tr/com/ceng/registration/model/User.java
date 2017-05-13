@@ -30,6 +30,8 @@ public class User extends BaseEntity{
 	@Column(name = "password", nullable = false, length=255)
 	private String password;
 	
+	private String confirmPassword;
+	
 	@Column(name = "email", nullable = false, length = 200)
 	private String email;
 	
@@ -106,6 +108,14 @@ public class User extends BaseEntity{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 	
 	
