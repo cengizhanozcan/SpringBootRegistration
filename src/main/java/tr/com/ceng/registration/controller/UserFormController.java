@@ -50,11 +50,11 @@ public class UserFormController implements Serializable{
 		}
 		
 		userService.save(user);
-		return "redirect:/user/create/" + user.getId();
+		return "redirect:/user/create/" + user.getId() + "/" + DisplayOption.VIEW;
 	}
 	
 	@RequestMapping(value = "/create/{id}/{displayOption}", method = RequestMethod.GET)
-	public String getUserForm(@PathVariable("id") Long id, @PathVariable("displayOption") 
+	public String getUserForm(@PathVariable(value = "id", required = false) Long id, @PathVariable("displayOption") 
 			DisplayOption displayOption, Model model){
 		User user = userService.findById(id);
 		model.addAttribute("user", user);

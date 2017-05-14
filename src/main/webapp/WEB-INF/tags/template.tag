@@ -1,5 +1,6 @@
 <%@ attribute name="header" fragment="true"%>
 <%@ attribute name="footer" fragment="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -37,19 +38,28 @@
 					class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="${pageContext.request.contextPath}/home">Uyelik Sistemi</a>
+			<a class="navbar-brand" href="${pageContext.request.contextPath}/home/">Uyelik Sistemi</a>
 		</div>
 		
 		<form name="submitLogout" action="${request.contextPath}/logout" method="POST">
 		<ul class="nav navbar-top-links navbar-right">
+			<c:if test="${nameSurname!='' }">
+				<c:out value="${nameSurname}"/> <c:out value="${role}"></c:out>
+			</c:if>
              <li class="dropdown">
                  <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                      <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                  </a>
                  <ul class="dropdown-menu dropdown-user">
-                     <li><a href="javascript:document.submitLogout.submit()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                     </li>
+                 	<c:if test="${nameSurname=='' }">
+	                 	<li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-sign-in fa-fw"></i>Login</a>
+	                     </li>
+                     </c:if>
+                     <c:if test="${nameSurname!='' }">
+	                     <li><a href="javascript:document.submitLogout.submit()"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
+							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+	                     </li>
+					</c:if>
                  </ul>
              </li>
          </ul>
@@ -58,17 +68,21 @@
 			<div class="sidebar-nav navbar-collapse">
 				<ul class="nav" id="side-menu">
 					<li>
-						<a href="${pageContext.request.contextPath}/home"><i class="fa fa-dashboard fa-fw"></i>
+						<a href="${pageContext.request.contextPath}/home/"><i class="fa fa-dashboard fa-fw"></i>
 							Anasayfa</a>
 					</li>
+					<c:if test="${role=='ADMIN'}">
+						<li>
+							<a href="${pageContext.request.contextPath}/user/"><i class="fa fa-users fa-fw"></i>
+								Kullanici Listesi</a>
+						</li>
+					</c:if>
+					<c:if test="${role!=''}">
 					<li>
-						<a href="${pageContext.request.contextPath}/user/"><i class="fa fa-users fa-fw"></i>
-							Kullanici Listesi</a>
-					</li>
-					<li>
-						<a href="${pageContext.request.contextPath}/user/create"><i class="fa fa-user-plus fa-fw"></i>
+						<a href="${pageContext.request.contextPath}/user/create/"><i class="fa fa-user-plus fa-fw"></i>
 							Kullanici Ekle</a>
 					</li>
+					</c:if>
 				</ul>
 			</div>
 			<!-- /.sidebar-collapse -->

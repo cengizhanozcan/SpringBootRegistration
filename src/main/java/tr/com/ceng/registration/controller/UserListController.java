@@ -23,7 +23,7 @@ public class UserListController implements Serializable{
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String getUserList(Model model){
 		model.addAttribute("users", userService.search());
 		

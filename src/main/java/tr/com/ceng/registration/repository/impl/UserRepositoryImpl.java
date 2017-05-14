@@ -2,6 +2,7 @@ package tr.com.ceng.registration.repository.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
@@ -19,10 +20,23 @@ import tr.com.ceng.registration.repository.UserRepository;
 public class UserRepositoryImpl extends BaseEntityRepositoryImpl<User> implements UserRepository {
 
 	@Override
-	public User findByUsername(String username) {
+	public User findByUsernameOrPassword(String username, String email) {
+		StringBuilder builder = new StringBuilder("FROM User WHERE 1=1 ");
+		if(StringUtils.isNotEmpty(username)){
+			builder.append(" AND username=:username ");
+		}
+		if(StringUtils.isNotEmpty(email)){
+			builder.append(" AND email=:email ");
+		}
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("FROM User WHERE username=:username ");
-		query.setParameter("username", username);
+		Query query = session.createQuery(builder.toString());
+
+		if(StringUtils.isNotEmpty(username)){
+			query.setParameter("username", username);
+		}
+		if(StringUtils.isNotEmpty(email)){
+			query.setParameter("email", email);
+		}
 		
 		List<User> users = query.list();
 		if(users != null && !users.isEmpty()){

@@ -39,12 +39,11 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findByUsername(String username) {
-		return userRepository.findByUsername(username);
+		return userRepository.findByUsernameOrPassword(username, null);
 	}
 
 	@Override
 	public User save(User user) {
-		validateBeforeSave(user);
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		
 		if(user.getId() == null){
@@ -55,24 +54,6 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		return user;
-	}
-
-	private void sendUserNotificationMail(User user) {
-		Mail mail = new Mail();
-		mail.setSubject(messageSource.getMessage("mail.userRegistration.subject", 
-				new Object[]{}, LocaleUtils.LOCALE_TR));
-		mail.setBody(messageSource.getMessage("mail.userRegistration.body", 
-				new Object[]{}, LocaleUtils.LOCALE_TR));
-		List<String> tos = new ArrayList<String>();
-		tos.add(user.getEmail());
-		mail.setTos(tos);
-
-		mailSenderService.send(mail);
-	}
-
-	private void validateBeforeSave(User user) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
@@ -87,6 +68,24 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> search() {
 		return userRepository.search();
+	}
+
+	private void sendUserNotificationMail(User user) {
+		Mail mail = new Mail();
+		mail.setSubject(messageSource.getMessage("mail.userRegistration.subject", 
+				new Object[]{}, LocaleUtils.LOCALE_TR));
+		mail.setBody(messageSource.getMessage("mail.userRegistration.body", 
+				new Object[]{}, LocaleUtils.LOCALE_TR));
+		List<String> tos = new ArrayList<String>();
+		tos.add(user.getEmail());
+		mail.setTos(tos);
+		
+		mailSenderService.send(mail);
+	}
+
+	@Override
+	public User findByUsernameOrPassword(String username, String email) {
+		return userRepository.findByUsernameOrPassword(username, email);
 	}
 
 }

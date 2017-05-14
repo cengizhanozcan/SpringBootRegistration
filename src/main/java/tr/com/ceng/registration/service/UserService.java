@@ -18,4 +18,6 @@ public interface UserService {
 
 	List<User> search();
 
+	User findByUsernameOrPassword(String username, String email);
+
 }

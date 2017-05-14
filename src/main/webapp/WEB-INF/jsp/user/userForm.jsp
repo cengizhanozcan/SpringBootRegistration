@@ -12,6 +12,8 @@
 	<jsp:body>
 		<c:url var="createUser" value="/user/create" />
 		<form:form action="${createUser}" method="post" modelAttribute="user">
+			
+			<form:hidden path="id"/>
 			<div class="panel panel-default">
 			  	<div class="panel-heading"></div>
 			  	<div class="panel-body">

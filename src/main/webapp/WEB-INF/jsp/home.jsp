@@ -7,7 +7,11 @@
 
 <t:template>
 	<jsp:attribute name="header">
-		Anasayfa
+		<h1>
+			<spring:message code="home.header" />		
+		</h1>
+		<br/>
+			<spring:message code="home.body" />
 	</jsp:attribute>
 	<jsp:body>
 	

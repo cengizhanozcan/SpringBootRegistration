@@ -1,11 +1,13 @@
 package tr.com.ceng.registration.controller.validator;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import tr.com.ceng.registration.model.User;
+import tr.com.ceng.registration.service.UserService;
 
 /**
  *
@@ -14,6 +16,9 @@ import tr.com.ceng.registration.model.User;
 @Component
 public class UserFormValidator implements Validator{
 
+	@Autowired
+	private UserService userService;
+	
 	@Override
 	public boolean supports(Class<?> arg0) {
 		return User.class.equals(arg0);
@@ -49,6 +54,16 @@ public class UserFormValidator implements Validator{
 		}
 		if(user.getGender() == null){
 			error.rejectValue("gender", "user.gender.notNull");
+		}
+		
+		User existUser = userService.findByUsernameOrPassword(user.getUsername(), user.getEmail());
+		if(existUser != null && existUser.getId() != user.getId()){
+			if(existUser.getUsername().equals(user.getUsername())){
+				error.rejectValue("username",  "user.username.alreadyExist");
+			}
+			if(existUser.getEmail().equals(user.getEmail())){
+				error.rejectValue("email", "user.email.alreadyExist");
+			}
 		}
 	}
 

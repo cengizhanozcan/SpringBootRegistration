@@ -33,9 +33,4 @@ public class LoginController implements Serializable{
 		return "login";
 	}
 	
-	@RequestMapping("/")
-	public String getIndex(){
-		return "hello";
-	}
-	
 }

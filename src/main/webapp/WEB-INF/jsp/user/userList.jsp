@@ -23,6 +23,7 @@
 								<th><spring:message code="user.email" /></th>
 								<th><spring:message code="user.phoneNumber" /></th>
 								<th><spring:message code="user.gender" /></th>
+								<th><spring:message code="user.role" /></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -35,6 +36,7 @@
 										<td>${user.email}</td>
 										<td>${user.phoneNumber}</td>
 										<td><spring:message code="${user.gender.lbl}" /></td>
+										<td>${user.role}</td>
 										<td><a href="<c:url value='/user/create/${user.id}/EDIT' />" />
 												<spring:message code="button.edit"/>
 											<a href="<c:url value='/user/create/${user.id}/VIEW' />" />
