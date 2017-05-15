@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -34,7 +35,8 @@ public class User extends BaseEntity implements UserDetails{
 	
 	@Column(name = "password", nullable = false, length=255)
 	private String password;
-	
+
+	@Transient
 	private String confirmPassword;
 	
 	@Column(name = "email", nullable = false, length = 200)

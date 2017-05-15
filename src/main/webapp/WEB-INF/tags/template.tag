@@ -41,7 +41,6 @@
 			<a class="navbar-brand" href="${pageContext.request.contextPath}/home/">Uyelik Sistemi</a>
 		</div>
 		
-		<form name="submitLogout" action="${request.contextPath}/logout" method="POST">
 		<ul class="nav navbar-top-links navbar-right">
 			<c:if test="${nameSurname!='' }">
 				<c:out value="${nameSurname}"/> <c:out value="${role}"></c:out>
@@ -52,18 +51,24 @@
                  </a>
                  <ul class="dropdown-menu dropdown-user">
                  	<c:if test="${nameSurname=='' }">
-	                 	<li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-sign-in fa-fw"></i>Login</a>
-	                     </li>
+	                 	<li><a href="${pageContext.request.contextPath}/login"><i class="fa fa-sign-in fa-fw"></i>Login</a></li>
                      </c:if>
                      <c:if test="${nameSurname!='' }">
-	                     <li><a href="javascript:document.submitLogout.submit()"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-	                     </li>
+	                 	<form name="submitProfile" action="/home/redirectUserEdit" method="POST">
+							<li><a href="javascript:document.submitProfile.submit()"><i class="fa fa-user fa-fw"></i>Profil</a>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+							</li>	                 	
+	                 	</form>
+
+						<form name="submitLogout" action="${request.contextPath}/logout" method="POST">
+		                    <li><a href="javascript:document.submitLogout.submit()"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+		                    </li>
+				         </form>
 					</c:if>
                  </ul>
              </li>
          </ul>
-         </form>
 		<div class="navbar-default sidebar" role="navigation">
 			<div class="sidebar-nav navbar-collapse">
 				<ul class="nav" id="side-menu">

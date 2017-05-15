@@ -88,4 +88,9 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findByUsernameOrPassword(username, email);
 	}
 
+	@Override
+	public void delete(User user) {
+		userRepository.delete(user);
+	}
+
 }

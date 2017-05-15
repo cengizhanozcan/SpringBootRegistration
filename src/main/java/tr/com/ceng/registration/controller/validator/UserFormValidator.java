@@ -56,7 +56,13 @@ public class UserFormValidator implements Validator{
 			error.rejectValue("gender", "user.gender.notNull");
 		}
 		
-		User existUser = userService.findByUsernameOrPassword(user.getUsername(), user.getEmail());
+		User existUser = userService.findByUsernameOrPassword(user.getUsername(), null);
+		checkExistUser(error, user, existUser);
+		existUser = userService.findByUsernameOrPassword(null, user.getEmail());
+		checkExistUser(error, user, existUser);
+	}
+
+	private void checkExistUser(Errors error, User user, User existUser) {
 		if(existUser != null && existUser.getId() != user.getId()){
 			if(existUser.getUsername().equals(user.getUsername())){
 				error.rejectValue("username",  "user.username.alreadyExist");

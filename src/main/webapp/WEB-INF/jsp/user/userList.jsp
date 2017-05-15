@@ -41,6 +41,8 @@
 												<spring:message code="button.edit"/>
 											<a href="<c:url value='/user/create/${user.id}/VIEW' />" />
 												<spring:message code="button.view"/>
+											<a href="<c:url value='/user/delete/${user.id}' />" />
+												<spring:message code="button.delete"/>
 										</td>
 									</tr>
 								</c:forEach>

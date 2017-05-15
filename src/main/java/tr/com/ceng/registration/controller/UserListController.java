@@ -8,7 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import tr.com.ceng.registration.model.Role;
+import tr.com.ceng.registration.model.User;
 import tr.com.ceng.registration.service.UserService;
+import tr.com.ceng.registration.utils.SpringUtils;
 
 /**
  *
@@ -25,6 +28,10 @@ public class UserListController implements Serializable{
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String getUserList(Model model){
+		User currentUser = SpringUtils.getUser();
+		if(currentUser.getRole() != Role.ADMIN){
+			return "403";
+		}
 		model.addAttribute("users", userService.search());
 		
 		return "user/userList";

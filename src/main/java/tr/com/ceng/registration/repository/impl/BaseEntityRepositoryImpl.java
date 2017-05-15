@@ -2,6 +2,8 @@ package tr.com.ceng.registration.repository.impl;
 
 import java.lang.reflect.ParameterizedType;
 
+import javax.persistence.EntityManager;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class BaseEntityRepositoryImpl<T extends BaseEntity> implements BaseEntit
 	@Autowired
 	protected SessionFactory sessionFactory;
 
+	@Autowired
+	private EntityManager entityManager;
+	
 	private Class<T> type;
 
 	@SuppressWarnings("unchecked")
@@ -52,8 +57,7 @@ public class BaseEntityRepositoryImpl<T extends BaseEntity> implements BaseEntit
 
 	@Override
 	public void delete(T entity) {
-		Session session = sessionFactory.getCurrentSession();
-		session.delete(entity);
+		entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
 	}
 
 	@Override

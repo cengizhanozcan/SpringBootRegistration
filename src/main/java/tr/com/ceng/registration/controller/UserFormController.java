@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import tr.com.ceng.registration.controller.validator.UserFormValidator;
 import tr.com.ceng.registration.model.DisplayOption;
+import tr.com.ceng.registration.model.Role;
 import tr.com.ceng.registration.model.User;
 import tr.com.ceng.registration.service.UserService;
+import tr.com.ceng.registration.utils.SpringUtils;
 
 /**
  *
@@ -56,6 +58,12 @@ public class UserFormController implements Serializable{
 	@RequestMapping(value = "/create/{id}/{displayOption}", method = RequestMethod.GET)
 	public String getUserForm(@PathVariable(value = "id", required = false) Long id, @PathVariable("displayOption") 
 			DisplayOption displayOption, Model model){
+		User currentUser = SpringUtils.getUser();
+		if(currentUser.getRole() != Role.ADMIN){
+			if(!currentUser.getId().equals(id)){
+				return "403";
+			}
+		}
 		User user = userService.findById(id);
 		model.addAttribute("user", user);
 		if(displayOption == DisplayOption.VIEW){
@@ -65,6 +73,18 @@ public class UserFormController implements Serializable{
 		}
 		
 		return "user/userForm";
+	}
+	
+	@RequestMapping(value = "/delete/{id}")
+	public String postDeleteUser(@PathVariable(value = "id") Long id){
+		User currentUser = SpringUtils.getUser();
+		if(currentUser.getRole() != Role.ADMIN){
+			return "403";
+		}
+		User user = userService.findById(id);
+		userService.delete(user);
+		
+		return "redirect:/user";
 	}
 	
 }

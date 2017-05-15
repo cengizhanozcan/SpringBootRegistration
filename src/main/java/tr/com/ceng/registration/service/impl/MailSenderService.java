@@ -1,6 +1,10 @@
 package tr.com.ceng.registration.service.impl;
 
+import java.io.IOException;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +28,8 @@ import tr.com.ceng.registration.model.Mail;
 @Component(value = "mailSenderService")
 public class MailSenderService implements Serializable{
 
+	private static final String URL_ADDRESS = "http://www.google.com";
+
 	@Value("${spring.mail.username}")
 	private String mailAddress;
 	
@@ -32,6 +38,9 @@ public class MailSenderService implements Serializable{
 	
 	public void send(Mail mail){
 		if(mail == null){
+			return;
+		}
+		if(!hasInternetConnection()){
 			return;
 		}
 		
@@ -44,6 +53,23 @@ public class MailSenderService implements Serializable{
 	    };
 	    
 	    mailSender.send(messagePreparator);
+	}
+
+	private boolean hasInternetConnection() {
+		try {
+			URL url = new URL(URL_ADDRESS);
+			HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			connection.connect();
+			if(connection.getResponseCode() == 200){
+				return true;
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
 	private InternetAddress[] getTos(Mail mail)  {

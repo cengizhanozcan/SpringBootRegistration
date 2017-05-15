@@ -16,7 +16,7 @@ import tr.com.ceng.registration.model.User;
  * @author Cengizhan Ozcan
  */
 @ControllerAdvice
-public class MenuController implements Serializable{
+public class MenuControllerAdvice implements Serializable{
 
 	@ModelAttribute("nameSurname")
 	public String getUsername(Authentication authentication){
@@ -47,17 +47,4 @@ public class MenuController implements Serializable{
 		return null;
 	}
 	
-	private User getUser(){
-		if (SecurityContextHolder.getContext() != null
-				&& SecurityContextHolder.getContext().getAuthentication() != null
-				&& SecurityContextHolder.getContext().getAuthentication()
-						.getPrincipal() != null
-				&& SecurityContextHolder.getContext().getAuthentication()
-						.getPrincipal() instanceof User) {
-			return ((User) SecurityContextHolder.getContext()
-					.getAuthentication().getPrincipal());
-		}
-		
-		return null;
-	}
 }
